@@ -3,6 +3,23 @@ HEIGHT = 20;
 WIDTH = 15;
 TIMER = false;
 
+
+$(".myDropdown").mouseover(function(e) {
+    $('#dropdownContent').show();
+  
+
+});
+
+$(".window-controls").mouseleave(function(e) {
+    $('#dropdownContent').hide();
+  
+
+
+});
+
+
+
+
 function getUniqueRandomIndexesInField(table, indexes) {
     indexes = indexes ? indexes : [];
     for (var i = indexes.length; i < MINES; i++) {
@@ -160,7 +177,10 @@ $.each(mine_indexes, function (index, coordinates) {
             }
         }
     })
+    
 });
+
+
 
 $.each(field_matrix, function(index, row) {
     $.each(row, function(index, cell) {

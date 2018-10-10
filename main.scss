@@ -80,6 +80,18 @@ body {
                 color: white;
             }
         }
+        li {
+        list-style: none;
+           
+        }
+        .menu-dropdown {
+            display: none;
+            position: absolute;
+            background-color: #e9e0e0;
+            min-width: 100px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
     }
 }
 
