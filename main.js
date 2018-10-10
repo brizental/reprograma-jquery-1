@@ -34,6 +34,8 @@ function getAdjacentCellIndexes(x, y) {
             && element[0] < WIDTH && element[1] < HEIGHT
     });
 }
+function tableGenerator (){
+
 
 var field_matrix = [];
 var field = $("#field table");
@@ -51,6 +53,8 @@ for (var i = 0; i < HEIGHT; i++) {
         button.contextmenu(function () {
             return false;
         });
+
+       var counter =0;
 
         button.mousedown(function(event) {
             if (!TIMER) {
@@ -170,3 +174,22 @@ $.each(field_matrix, function(index, row) {
         }
     });
 });
+}
+
+
+tableGenerator()
+
+
+$("#reset").click(function(){
+ $("#field table").html("");
+ $("#reset").removeClass("game-over");
+ 
+// counter = 0;
+//  if (!TIMER) {
+//     TIMER = setInterval(function () {
+//         counter++;
+//         $("#timer").text(counter);
+//     }, 1000);}
+
+ tableGenerator()
+})
