@@ -35,8 +35,11 @@ function getAdjacentCellIndexes(x, y) {
     });
 }
 
+function gerarTabela(){
+
 var field_matrix = [];
 var field = $("#field table");
+
 for (var i = 0; i < HEIGHT; i++) {
     var row_vector = [];
     var row = $("<tr>");
@@ -51,7 +54,7 @@ for (var i = 0; i < HEIGHT; i++) {
         button.contextmenu(function () {
             return false;
         });
-
+        counter = 0;
         button.mousedown(function(event) {
             if (!TIMER) {
                 TIMER = setInterval(function () {
@@ -170,3 +173,17 @@ $.each(field_matrix, function(index, row) {
         }
     });
 });
+}
+
+gerarTabela();
+
+var reset = $("#reset");
+reset.mousedown(function(){
+    $("#field table").html("");
+    reset.removeClass("game-over");
+    clearInterval(TIMER);
+    $("#timer").html("");
+    $("#mines").html("");
+    TIMER = false;
+    gerarTabela();
+})
