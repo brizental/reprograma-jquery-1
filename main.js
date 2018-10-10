@@ -1,24 +1,7 @@
+HEIGHT = 16;
+WIDTH = 16;
 MINES = 40;
-HEIGHT = 20;
-WIDTH = 15;
 TIMER = false;
-
-
-$(".myDropdown").mouseover(function(e) {
-    $('#dropdownContent').show();
-  
-
-});
-
-$(".window-controls").mouseleave(function(e) {
-    $('#dropdownContent').hide();
-  
-
-
-});
-
-
-
 
 function getUniqueRandomIndexesInField(table, indexes) {
     indexes = indexes ? indexes : [];
@@ -52,6 +35,8 @@ function getAdjacentCellIndexes(x, y) {
     });
 }
 
+function criarJogo(){
+
 var field_matrix = [];
 var field = $("#field table");
 for (var i = 0; i < HEIGHT; i++) {
@@ -68,7 +53,7 @@ for (var i = 0; i < HEIGHT; i++) {
         button.contextmenu(function () {
             return false;
         });
-
+        counter = 0;
         button.mousedown(function(event) {
             if (!TIMER) {
                 TIMER = setInterval(function () {
@@ -180,8 +165,6 @@ $.each(mine_indexes, function (index, coordinates) {
     
 });
 
-
-
 $.each(field_matrix, function(index, row) {
     $.each(row, function(index, cell) {
         var number = $(cell).data("mines");
@@ -190,3 +173,63 @@ $.each(field_matrix, function(index, row) {
         }
     });
 });
+}   
+
+function funcaoZerar() {
+    $("#field table").html("");
+    reset.removeClass("game-over");
+    clearInterval(TIMER);
+    $("#timer").html("");
+    $("#mines").html("");
+    TIMER = false;
+    criarJogo();
+    }
+
+criarJogo();
+
+$(".myDropdown").mouseover(function(e) {
+    $('#dropdownContent').show();
+});
+
+$(".window-controls").mouseleave(function(e) {
+    $('#dropdownContent').hide();
+});
+
+var botaoIniciante = $("#iniciante");
+var botaoIntermediario = $("#intermediario");
+var botaoAvancado = $("#avancado");
+
+botaoIniciante.mousedown(function(){
+    $("#field table").html("");
+    HEIGHT = 8;
+    WIDTH = 8;
+    MINES = 10;
+    criarJogo();
+    $('.window').css("width", "267px");
+    funcaoZerar();
+})
+
+botaoIntermediario.mousedown(function(){
+    $("#field table").html("");
+    HEIGHT = 16;
+    WIDTH = 16;
+    MINES = 40;
+    criarJogo();
+    $('.window').css("width", "480px");
+    funcaoZerar();
+})
+
+botaoAvancado.mousedown(function(){
+    $("#field table").html("");
+    HEIGHT = 24;
+    WIDTH = 24;
+    MINES = 90;
+    criarJogo();
+    $('.window').css("width", "746px");
+    funcaoZerar();
+})
+
+var reset = $("#reset");
+reset.mousedown(function(){
+    funcaoZerar();
+})
