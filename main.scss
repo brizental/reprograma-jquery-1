@@ -17,6 +17,7 @@ body {
     background-repeat: no-repeat;
     min-height: 100vh;
     position: relative;
+    display: flex;
 }
 
 .button {
@@ -182,6 +183,35 @@ body {
                     background-size: cover;
                 }
             }
+        }
+    }    
+}
+
+.ranking {
+    background-color: $windows-light-gray;
+    max-width: 300px;
+    max-height: 630px;
+    overflow: auto;
+    border: 1px solid darkgray;
+    & table {
+        max-width: 100%;
+        margin: 1px;
+        & tr {
+            
+            & th {
+                min-width: 49%;
+                background-color: #082366;
+                font-weight: bold;
+                color: #fff;
+                padding: 5px;
+                font-size: 15px;
+            }
+            & td {
+                width: 49%;
+                word-break: break-word;
+                padding: 5px;
+                border: 2px inset #d6cfc7;
+               }
         }
     }
 }
