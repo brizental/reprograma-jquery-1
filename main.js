@@ -101,10 +101,28 @@ for (var i = 0; i < HEIGHT; i++) {
                 }
 
                 if ($("td .button").length === MINES) {
+                    var winner_name = prompt("Parabéns! Qual é o seu nome?");
                     $("#reset").addClass("winner");
                     clearInterval(TIMER);
-                }
 
+                    $.ajax({
+                        method: "POST",
+                        url: "https://campo-minado.herokuapp.com/save",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify ({
+                            timestamp: Date.now(),
+                            name: winner_name,
+                            score: counter
+                            })
+                        })
+                        .done(function(data) {
+                            console.log("data", data);
+                        })
+                        .catch(function(error) {
+                            console.log("error", error);
+                        })
+                }
             }
         })
 
@@ -177,7 +195,7 @@ $.each(field_matrix, function(index, row) {
 
 function funcaoZerar() {
     $("#field table").html("");
-    reset.removeClass("game-over");
+    reset.removeClass("game-over wow winner");
     clearInterval(TIMER);
     $("#timer").html("");
     $("#mines").html("");
@@ -206,6 +224,7 @@ botaoIniciante.mousedown(function(){
     MINES = 10;
     criarJogo();
     $('.window').css("width", "267px");
+    $('.ranking').css("max-height", "390px");
     funcaoZerar();
 })
 
@@ -216,6 +235,7 @@ botaoIntermediario.mousedown(function(){
     MINES = 40;
     criarJogo();
     $('.window').css("width", "480px");
+    $('.ranking').css("max-height", "630px");
     funcaoZerar();
 })
 
@@ -226,6 +246,7 @@ botaoAvancado.mousedown(function(){
     MINES = 90;
     criarJogo();
     $('.window').css("width", "746px");
+    $('.ranking').css("max-height", "870px");
     funcaoZerar();
 })
 
@@ -233,3 +254,25 @@ var reset = $("#reset");
 reset.mousedown(function(){
     funcaoZerar();
 })
+
+$.ajax("https://campo-minado.herokuapp.com/get")
+	.done(function(data) {	
+        var ranking = $(".ranking table");
+		for (var i = 0; i < data.length; i++) {
+            console.log(data[i].score)
+            console.log(data[i].name)
+
+            var linha = $("<tr>");
+            var nome = $("<td>");
+            var pontos = $("<td>");
+
+            nome.append(data[i].name);
+            pontos.append(data[i].score);
+
+            linha.append(nome);
+            linha.append(pontos);
+
+            ranking.append(linha)
+            }
+    })
+
