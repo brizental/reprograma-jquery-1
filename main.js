@@ -103,8 +103,25 @@ for (var i = 0; i < HEIGHT; i++) {
                 if ($("td .button").length === MINES) {
                     $("#reset").addClass("winner");
                     clearInterval(TIMER);
-                }
 
+                    $.ajax({
+                        method: "POST",
+                        url: "https://campo-minado.herokuapp.com/save",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify ({
+                            timestamp: Date.now(),
+                            name: "Chiquinha",
+                            score: counter
+                            })
+                        })
+                        .done(function(data) {
+                            console.log("data", data);
+                        })
+                        .catch(function(error) {
+                            console.log("error", error);
+                        })
+                }
             }
         })
 
@@ -177,7 +194,7 @@ $.each(field_matrix, function(index, row) {
 
 function funcaoZerar() {
     $("#field table").html("");
-    reset.removeClass("game-over");
+    reset.removeClass("game-over wow winner");
     clearInterval(TIMER);
     $("#timer").html("");
     $("#mines").html("");
@@ -201,9 +218,9 @@ var botaoAvancado = $("#avancado");
 
 botaoIniciante.mousedown(function(){
     $("#field table").html("");
-    HEIGHT = 8;
-    WIDTH = 8;
-    MINES = 10;
+    HEIGHT = 4;
+    WIDTH = 4;
+    MINES = 1;
     criarJogo();
     $('.window').css("width", "267px");
     funcaoZerar();
@@ -233,3 +250,25 @@ var reset = $("#reset");
 reset.mousedown(function(){
     funcaoZerar();
 })
+
+$.ajax("https://campo-minado.herokuapp.com/get")
+	.done(function(data) {	
+        var ranking = $(".ranking table");
+		for (var i = 0; i < data.length; i++) {
+            console.log(data[i].score)
+            console.log(data[i].name)
+
+            var linha = $("<tr>");
+            var nome = $("<td>");
+            var pontos = $("<td>");
+
+            nome.append(data[i].name);
+            pontos.append(data[i].score);
+
+            linha.append(nome);
+            linha.append(pontos);
+
+            ranking.append(linha)
+            }
+    })
+
