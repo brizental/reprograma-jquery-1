@@ -101,6 +101,7 @@ for (var i = 0; i < HEIGHT; i++) {
                 }
 
                 if ($("td .button").length === MINES) {
+                    var winner_name = prompt("Parabéns! Qual é o seu nome?");
                     $("#reset").addClass("winner");
                     clearInterval(TIMER);
 
@@ -111,7 +112,7 @@ for (var i = 0; i < HEIGHT; i++) {
                         dataType: "json",
                         data: JSON.stringify ({
                             timestamp: Date.now(),
-                            name: "Chiquinha",
+                            name: winner_name,
                             score: counter
                             })
                         })
@@ -218,11 +219,12 @@ var botaoAvancado = $("#avancado");
 
 botaoIniciante.mousedown(function(){
     $("#field table").html("");
-    HEIGHT = 4;
-    WIDTH = 4;
-    MINES = 1;
+    HEIGHT = 8;
+    WIDTH = 8;
+    MINES = 10;
     criarJogo();
     $('.window').css("width", "267px");
+    $('.ranking').css("max-height", "390px");
     funcaoZerar();
 })
 
@@ -233,6 +235,7 @@ botaoIntermediario.mousedown(function(){
     MINES = 40;
     criarJogo();
     $('.window').css("width", "480px");
+    $('.ranking').css("max-height", "630px");
     funcaoZerar();
 })
 
@@ -243,6 +246,7 @@ botaoAvancado.mousedown(function(){
     MINES = 90;
     criarJogo();
     $('.window').css("width", "746px");
+    $('.ranking').css("max-height", "870px");
     funcaoZerar();
 })
 
